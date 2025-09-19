@@ -32,4 +32,14 @@ public class Aluno {
 
     @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Boletim> boletins = new HashSet<>();
+
+    public static Aluno of(String nome, String cpf, String email, String telefone, String endereco) {
+        Aluno a = new Aluno();            // pode usar porque está dentro da própria classe
+        a.setNome(nome);
+        a.setCpf(cpf);
+        a.setEmail(email);
+        a.setTelefone(telefone);
+        a.setEndereco(endereco);
+        return a;
+    }
 }

@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.example.at_spring_boot.service.Validation.requireNonBlank;
+
 @Service @RequiredArgsConstructor
 public class DisciplinaService {
 
@@ -17,6 +19,9 @@ public class DisciplinaService {
 
     @Transactional
     public Disciplina criar(String nome, String codigo) {
+        requireNonBlank(nome, "Nome é obrigatório.");
+        requireNonBlank(codigo, "Código é obrigatório.");
+
         var d = factory.nova(nome, codigo);
         if (repo.existsByCodigo(d.getCodigo())) throw new IllegalArgumentException("Código já utilizado.");
         return repo.save(d);

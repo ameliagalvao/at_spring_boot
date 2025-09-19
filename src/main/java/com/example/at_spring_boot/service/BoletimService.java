@@ -11,6 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.example.at_spring_boot.service.Validation.requireNonBlank;
+import static com.example.at_spring_boot.service.Validation.requireNonNull;
+
 @Service @RequiredArgsConstructor
 public class BoletimService {
 
@@ -20,6 +23,9 @@ public class BoletimService {
 
     @Transactional
     public Boletim matricular(Long alunoId, String codigoDisciplina) {
+        requireNonNull(alunoId, "Aluno é obrigatório.");
+        requireNonBlank(codigoDisciplina, "Código da disciplina é obrigatório.");
+
         Aluno aluno = alunoService.buscarPorId(alunoId);
         Disciplina disc = disciplinaService.porCodigo(codigoDisciplina);
         repo.findByAlunoAndDisciplina(aluno, disc).ifPresent(b -> {
@@ -31,6 +37,9 @@ public class BoletimService {
 
     @Transactional
     public Boletim atribuirNota(Long alunoId, String codigoDisciplina, double nota) {
+        requireNonNull(alunoId, "Aluno é obrigatório.");
+        requireNonBlank(codigoDisciplina, "Código da disciplina é obrigatório.");
+
         Aluno aluno = alunoService.buscarPorId(alunoId);
         Disciplina disc = disciplinaService.porCodigo(codigoDisciplina);
         Boletim b = repo.findByAlunoAndDisciplina(aluno, disc)

@@ -12,6 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.example.at_spring_boot.service.Validation.requireNonBlank;
+import static com.example.at_spring_boot.service.Validation.requireNonNull;
+
 @Service @RequiredArgsConstructor
 public class DocenciaService {
 
@@ -22,6 +25,10 @@ public class DocenciaService {
     @Transactional
     public Docencia alocar(Long professorId, Long disciplinaId, String periodo,
                            Integer cargaHoraria, boolean principal) {
+        requireNonNull(professorId, "Professor é obrigatório.");
+        requireNonNull(disciplinaId, "Disciplina é obrigatória.");
+        requireNonBlank(periodo, "Período é obrigatório.");
+
         Professor prof = professorRepo.findById(professorId)
                 .orElseThrow(() -> new IllegalArgumentException("Professor não encontrado"));
         Disciplina disc = disciplinaRepo.findById(disciplinaId)
