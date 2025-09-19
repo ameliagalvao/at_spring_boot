@@ -36,4 +36,22 @@ public class Docencia {
     private Integer cargaHoraria;
     private boolean ativo = true;
     private boolean principal = false;
+
+    public static Docencia of(Professor prof, Disciplina disc, String periodo,
+                              Integer cargaHoraria, boolean principal) {
+        Docencia d = new Docencia();
+        d.setProfessor(prof);
+        d.setDisciplina(disc);
+        d.setPeriodo(periodo);
+        d.setCargaHoraria(cargaHoraria);
+        d.setPrincipal(principal);
+        d.setAtivo(true);
+        return d;
+    }
+
+    public void encerrar() {
+        if (!this.ativo) return; // idempotente (opcional: lançar exceção se preferir)
+        this.ativo = false;
+        this.fim = java.time.LocalDate.now(); // registra data de término (opcional)
+    }
 }

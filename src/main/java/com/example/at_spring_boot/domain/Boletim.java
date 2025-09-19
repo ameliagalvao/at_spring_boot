@@ -21,4 +21,15 @@ public class Boletim {
 
     @Embedded
     private Nota nota; // pode ser null até o lançamento
+
+    public static Boletim of(Aluno aluno, Disciplina disciplina) {
+        Boletim b = new Boletim();
+        b.setAluno(aluno);
+        b.setDisciplina(disciplina);
+        return b;
+    }
+
+    public void lancarNota(double valor) {
+        this.nota = Nota.of(valor);
+    }
 }
