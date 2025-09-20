@@ -28,4 +28,13 @@ public class Professor {
 
     @OneToMany(mappedBy = "professor", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Docencia> docencias = new HashSet<>();
+
+    public static Professor of(String nome, String cpf, String email, String telefone) {
+        var p = new Professor();
+        p.setNome(nome);
+        p.setCpf(cpf);
+        p.setEmail(email);
+        p.setTelefone(telefone);
+        return p;
+    }
 }

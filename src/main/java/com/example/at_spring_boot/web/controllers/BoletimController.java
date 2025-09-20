@@ -11,7 +11,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/boletins")
@@ -34,26 +33,29 @@ public class BoletimController {
         return toResponse(b);
     }
 
-    @GetMapping("/aprovados/{codigoDisciplina}")
+    // Alinhar com o teste: query param em vez de path variable
+    @GetMapping("/aprovados")
     @PreAuthorize("hasRole('PROFESSOR')")
-    public List<BoletimResponse> aprovados(@PathVariable String codigoDisciplina) {
+    public List<BoletimResponse> aprovados(@RequestParam String codigoDisciplina) {
         return service.aprovados(codigoDisciplina).stream().map(this::toResponse).toList();
     }
 
-    @GetMapping("/reprovados/{codigoDisciplina}")
+    @GetMapping("/reprovados")
     @PreAuthorize("hasRole('PROFESSOR')")
-    public List<BoletimResponse> reprovados(@PathVariable String codigoDisciplina) {
+    public List<BoletimResponse> reprovados(@RequestParam String codigoDisciplina) {
         return service.reprovados(codigoDisciplina).stream().map(this::toResponse).toList();
     }
 
     private BoletimResponse toResponse(Boletim b) {
+        Double nota = (b.getNota() == null) ? null : b.getNota().getValor();
+        Boolean aprovado = (b.getNota() == null) ? null : b.getNota().aprovado();
         return new BoletimResponse(
                 b.getId(),
                 b.getAluno().getId(),
                 b.getAluno().getNome(),
                 b.getDisciplina().getCodigo(),
-                b.getNota() == null ? null : b.getNota().getValor()
+                nota,
+                aprovado
         );
     }
-
 }

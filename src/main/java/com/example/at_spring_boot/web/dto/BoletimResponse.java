@@ -5,6 +5,7 @@ public record BoletimResponse(
         Long alunoId,
         String alunoNome,
         String disciplinaCodigo,
-        Double nota
+        Double nota,
+        Boolean aprovado
 ) {}
 
