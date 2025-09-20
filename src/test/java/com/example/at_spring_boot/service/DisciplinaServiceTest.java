@@ -5,6 +5,8 @@ import com.example.at_spring_boot.repository.DisciplinaRepository;
 import com.example.at_spring_boot.domain.DisciplinaFactory;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -26,5 +28,25 @@ class DisciplinaServiceTest {
         assertThatThrownBy(() -> service.criar("POO", "POO101"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Código já utilizado");
+    }
+
+    @Test
+    void porCodigo_naoEncontrado_disparaErro() {
+        var repo = mock(DisciplinaRepository.class);
+        var service = new DisciplinaService(repo, new DisciplinaFactory());
+
+        when(repo.findByCodigo("BD101")).thenReturn(Optional.empty());
+        assertThatThrownBy(() -> service.porCodigo("bd101"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Disciplina não encontrada");
+    }
+
+    @Test
+    void listarTodos_ok() {
+        var repo = mock(DisciplinaRepository.class);
+        var service = new DisciplinaService(repo, new DisciplinaFactory());
+        when(repo.findAll()).thenReturn(java.util.List.of());
+        assertThat(service.listarTodos()).isEmpty();
+        verify(repo).findAll();
     }
 }
