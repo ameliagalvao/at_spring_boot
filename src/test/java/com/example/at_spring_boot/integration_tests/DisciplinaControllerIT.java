@@ -1,4 +1,4 @@
-package com.example.at_spring_boot.web;
+package com.example.at_spring_boot.integration_tests;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 

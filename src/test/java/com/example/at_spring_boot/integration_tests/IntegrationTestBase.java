@@ -1,4 +1,4 @@
-package com.example.at_spring_boot.web;
+package com.example.at_spring_boot.integration_tests;
 import com.example.at_spring_boot.repository.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;

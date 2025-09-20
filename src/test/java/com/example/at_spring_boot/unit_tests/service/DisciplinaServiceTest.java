@@ -1,8 +1,9 @@
-package com.example.at_spring_boot.service;
+package com.example.at_spring_boot.unit_tests.service;
 
 import com.example.at_spring_boot.domain.Disciplina;
 import com.example.at_spring_boot.repository.DisciplinaRepository;
 import com.example.at_spring_boot.domain.DisciplinaFactory;
+import com.example.at_spring_boot.service.DisciplinaService;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;

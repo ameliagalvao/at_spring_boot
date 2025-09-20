@@ -1,4 +1,4 @@
-package com.example.at_spring_boot.service;
+package com.example.at_spring_boot.unit_tests.service;
 
 import com.example.at_spring_boot.domain.DisciplinaFactory;
 import com.example.at_spring_boot.domain.Docencia;
@@ -6,6 +6,7 @@ import com.example.at_spring_boot.domain.Professor;
 import com.example.at_spring_boot.repository.DisciplinaRepository;
 import com.example.at_spring_boot.repository.DocenciaRepository;
 import com.example.at_spring_boot.repository.ProfessorRepository;
+import com.example.at_spring_boot.service.DocenciaService;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
