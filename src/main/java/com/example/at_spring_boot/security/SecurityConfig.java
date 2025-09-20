@@ -21,7 +21,6 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
         );
         http.headers(h -> h.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
-        http.oauth2Login(Customizer.withDefaults()); // opcional
         http.formLogin(Customizer.withDefaults());
         http.httpBasic(Customizer.withDefaults());
         return http.build();
