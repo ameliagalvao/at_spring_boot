@@ -1,1 +1,36 @@
 services:
+  db:
+    image: postgres:16
+    container_name: at_db
+    environment:
+      POSTGRES_DB: escola
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d escola"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: at_spring_boot
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/escola
+      SPRING_DATASOURCE_USERNAME: app
+      SPRING_DATASOURCE_PASSWORD: app
+      SPRING_SECURITY_USER_NAME: prof
+      SPRING_SECURITY_USER_PASSWORD: "{noop}prof"
+      SPRING_SECURITY_USER_ROLES: PROFESSOR
+volumes:
+  pgdata:

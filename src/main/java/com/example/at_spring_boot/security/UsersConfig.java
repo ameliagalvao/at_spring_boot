@@ -5,28 +5,25 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@Profile({"dev","test"})
-public class WebSecurityBeans {
+@Profile("prod")
+public class UsersConfig {
 
     @Bean
     public UserDetailsService users(PasswordEncoder encoder) {
-        UserDetails professor = User.withUsername("prof")
-                .password(encoder.encode("123"))
+        var prof = User.withUsername("prof")
+                .password(encoder.encode("prof")) // credenciais de PROD
                 .roles("PROFESSOR")
                 .build();
-
-        UserDetails aluno = User.withUsername("aluno")
-                .password(encoder.encode("123"))
-                .roles("ALUNO")
-                .build();
-
-        return new InMemoryUserDetailsManager(professor, aluno);
+        return new InMemoryUserDetailsManager(prof);
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }
